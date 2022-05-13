@@ -7,6 +7,12 @@ import * as dat from 'dat.gui'
 const textureLoader = new THREE.TextureLoader()
 
 const normalTexture = textureLoader.load('../textures/earthNormalMap.png')
+const baseColorMap = textureLoader.load('../textures/Metal_Rusted_010_basecolor.jpg')
+const aoMap1 = textureLoader.load('../textures/Metal_Rusted_010_ambientOcclusion.jpg')
+const heightMap = textureLoader.load('../textures/Metal_Rusted_010_height.png')
+const metalMap = textureLoader.load('../textures/Metal_Rusted_010_metallic.jpg')
+const normalTexture2 = textureLoader.load('../textures/Metal_Rusted_010_normal.jpg')
+const roughnessMap = textureLoader.load('../textures/Metal_Rusted_010_roughness.jpg')
 
 // Debug
 const gui = new dat.GUI()
@@ -23,10 +29,14 @@ const geometry = new THREE.SphereBufferGeometry(.5, 64, 64)
 // Materials
 
 const material = new THREE.MeshStandardMaterial()
-material.metalness = 0.7
-material.roughness = 0.2
-material.normalMap = normalTexture
-material.color = new THREE.Color(0x292929)
+material.metalness = 0.2
+material.roughness = 0.7
+material.map = baseColorMap
+material.aoMap = aoMap1
+material.height = heightMap
+material.normalMap = normalTexture2
+material.roughnessMap = roughnessMap
+material.metalnessMap = metalMap
 
 // Mesh
 const sphere = new THREE.Mesh(geometry, material)
@@ -34,24 +44,24 @@ scene.add(sphere)
 
 // Lights
 
-const pointLight = new THREE.PointLight(0xff0000, 0.1)
+const pointLight = new THREE.PointLight(0xffffff, 0.1)
 pointLight.position.x = 2
 pointLight.position.y = 3
 pointLight.position.z = 4
-pointLight.intensity = 7.99
+pointLight.intensity = 2.14
 scene.add(pointLight)
 
 const light1 = gui.addFolder('Light 1')
 
-const pointLight2 = new THREE.PointLight(0xff0000, 2)
-pointLight2.intensity = 10
+const pointLight2 = new THREE.PointLight(0xffffff, 2)
+pointLight2.intensity = 0
 pointLight2.position.set(-1.71, 1, -2.5)
 scene.add(pointLight2)
 
 const light2 = gui.addFolder('Light 2')
 
-const pointLight3 = new THREE.PointLight(0xff0000, 2)
-pointLight3.intensity = 10
+const pointLight3 = new THREE.PointLight(0xffffff, 2)
+pointLight3.intensity = 0
 pointLight3.position.set(6, 1, -9.5)
 scene.add(pointLight3)
 
