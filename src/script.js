@@ -6,7 +6,7 @@ import * as dat from 'dat.gui'
 // Loading
 const textureLoader = new THREE.TextureLoader()
 
-const normalTexture = textureLoader.load('./textures/earthNormalMap')
+const normalTexture = textureLoader.load('../textures/earthNormalMap.png')
 
 // Debug
 const gui = new dat.GUI()
@@ -18,7 +18,7 @@ const canvas = document.querySelector('canvas.webgl')
 const scene = new THREE.Scene()
 
 // Objects
-const geometry = new THREE.SphereGeometry(.5, 64, 64)
+const geometry = new THREE.SphereBufferGeometry(.5, 64, 64)
 
 // Materials
 
@@ -40,29 +40,36 @@ pointLight.position.y = 3
 pointLight.position.z = 4
 scene.add(pointLight)
 
+const light1 = gui.addFolder('Light 1')
+
 const pointLight2 = new THREE.PointLight(0xff0000, 2)
 pointLight2.intensity = 10
 pointLight2.position.set(-1.9, 1, -1.6)
 scene.add(pointLight2)
 
-const light1 = gui.addFolder('Light 1')
+const light2 = gui.addFolder('Light 2')
 
 const pointLight3 = new THREE.PointLight(0xff0000, 2)
 pointLight3.intensity = 10
 pointLight3.position.set(-1.9, 1, -1.6)
 scene.add(pointLight3)
 
-const light2 = gui.addFolder('Light 2')
+const light3 = gui.addFolder('Light 3')
 
-light1.add(pointLight2.position, 'y').min(-3).max(0.24).step(0.01)
-light1.add(pointLight2.position, 'x').min(-6).max(6).step(0.01)
-light1.add(pointLight2.position, 'z').min(-3).max(0.24).step(0.01)
-light1.add(pointLight2, 'intensity').min(0).max(10).step(0.01)
+light1.add(pointLight.position, 'y').min(-3).max(0.24).step(0.01)
+light1.add(pointLight.position, 'x').min(-6).max(6).step(0.01)
+light1.add(pointLight.position, 'z').min(-3).max(0.24).step(0.01)
+light1.add(pointLight, 'intensity').min(0).max(10).step(0.01)
 
-light2.add(pointLight3.position, 'y').min(-3).max(0.24).step(0.01)
-light2.add(pointLight3.position, 'x').min(-6).max(6).step(0.01)
-light2.add(pointLight3.position, 'z').min(-3).max(0.24).step(0.01)
-light2.add(pointLight3, 'intensity').min(0).max(10).step(0.01)
+light2.add(pointLight2.position, 'y').min(-3).max(0.24).step(0.01)
+light2.add(pointLight2.position, 'x').min(-6).max(6).step(0.01)
+light2.add(pointLight2.position, 'z').min(-3).max(0.24).step(0.01)
+light2.add(pointLight2, 'intensity').min(0).max(10).step(0.01)
+
+light3.add(pointLight3.position, 'y').min(-3).max(0.24).step(0.01)
+light3.add(pointLight3.position, 'x').min(-6).max(6).step(0.01)
+light3.add(pointLight3.position, 'z').min(-3).max(0.24).step(0.01)
+light3.add(pointLight3, 'intensity').min(0).max(10).step(0.01)
 
 const pointLightHelper = new THREE.PointLightHelper(pointLight2, 1)
 const pointLightHelper2 = new THREE.PointLightHelper(pointLight3, 1)
