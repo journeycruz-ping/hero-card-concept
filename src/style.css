@@ -1,4 +1,66 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;300;400;500;600;700;900&display=swap');
+:root {
+    --gotham: "Gotham", helvetica, arial, sans-serif;
+    --gotham-cond: "Gotham Cond", helvetica, sans-serif;
+    --gotham-narrow: "Gotham Narrow", helvetica, sans-serif;
+    --secondary-gray: #e5e5ec;
+    --core-dark: #051727;
+    --core-red: #b3282d;
+    --coreneutral-101: #fbfbfc;
+    --coreneutral-103: #eff0f1;
+    --coreneutral-108: #828b93;
+}
+
+
+/* fonts */
+
+@font-face {
+    font-family: "Gotham Narrow";
+    src: url("https://download.pingidentity.com/public/fonts-gotham/woff2/GothamNarrow-Black_Web.woff2") format("woff2"), url("https://download.pingidentity.com/public/fonts-gotham/woff/GothamNarrow-Black_Web.woff") format("woff");
+    font-weight: 800;
+    font-style: normal;
+    unicode-range: U+00-7F;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "Gotham";
+    src: url("https://download.pingidentity.com/public/fonts-gotham/woff2/Gotham-Book_Web.woff2") format("woff2"), url("https://download.pingidentity.com/public/fonts-gotham/woff2/Gotham-Book_Web.woff") format("woff");
+    font-weight: 400;
+    font-style: normal;
+    unicode-range: U+00-7F;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "Gotham";
+    src: url("/static/fonts/Gotham-Medium_Web.woff2") format("woff2");
+    font-weight: 500;
+    font-style: normal;
+    unicode-range: U+00-7F;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "Gotham Narrow";
+    src: url("https://download.pingidentity.com/public/fonts-gotham/woff2/Gotham-Bold_Web.woff2") format("woff2"), url("https://download.pingidentity.com/public/fonts-gotham/woff/Gotham-Bold_Web.woff") format("woff");
+    font-weight: 700;
+    font-style: normal;
+    unicode-range: U+00-7F;
+    font-display: swap;
+}
+
+
+/* typography */
+
+.body-101--medium {
+    font-family: var(--gotham);
+    color: var(--core-dark);
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 22px;
+    z-index: 999;
+}
+
 * {
     margin: 0;
     padding: 0;
