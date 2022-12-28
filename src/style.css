@@ -79,7 +79,6 @@ a {
 canvas {
     height: 100%;
     width: 50%;
-    transform: translateX(-250px)
 }
 
 .flickity-button {
