@@ -25,8 +25,8 @@ import * as Flickity from 'flickity'
         currentGraphic = 0,
         graphicCanvas,
         gctx,
-        canvasWidth = 240,
-        canvasHeight = 240,
+        canvasWidth = 350,
+        canvasHeight = 350,
         graphicPixels,
         particles = [],
         graphicOffsetX = canvasWidth / 2,
@@ -67,21 +67,22 @@ import * as Flickity from 'flickity'
     // Setup camera
     // -----------------------
     const initCamera = () => {
-            const fieldOfView = 85;
-            const aspectRatio = windowWidth / windowHeight;
-            const nearPlane = 1;
-            const farPlane = 3000;
-            camera = new THREE.PerspectiveCamera(
-                fieldOfView,
-                aspectRatio,
-                nearPlane,
-                farPlane,
-            );
-            camera.position.z = 800;
-        }
-        // -----------------------
-        // Setup canvas
-        // -----------------------
+        const fieldOfView = 90;
+        const aspectRatio = windowWidth / windowHeight;
+        const nearPlane = 0.1;
+        const farPlane = 1000;
+        camera = new THREE.PerspectiveCamera(
+            fieldOfView,
+            aspectRatio,
+            nearPlane,
+            farPlane,
+        );
+        camera.position.z = 800;
+    }
+
+    // -----------------------
+    // Setup canvas
+    // -----------------------
     const initCanvas = () => {
         graphicCanvas = document.createElement('canvas');
         graphicCanvas.width = canvasWidth;
@@ -139,7 +140,6 @@ import * as Flickity from 'flickity'
         //     box.geometry.vertices[i].y += -2 + Math.random() * 4;
         //     box.geometry.vertices[i].z += -2 + Math.random() * 4;
         // }
-
         particle.add(box);
         this.particle = particle;
     }
@@ -187,7 +187,6 @@ import * as Flickity from 'flickity'
             randomPos(particles[i].particle.targetPosition, true);
         }
 
-        console.log('Total Particles: ' + particles.length);
     }
 
     // -----------------------
@@ -287,7 +286,7 @@ import * as Flickity from 'flickity'
         flkty.on('select', listener);
     }
 
-    setInterval(function() { document.querySelector(".next").click() }, 2000);
+    // setInterval(function() { document.querySelector(".next").click() }, 2000);
 
     const onMouseMove = (event) => {
         mouseX = (event.clientX - windowHalfWidth);
@@ -322,6 +321,8 @@ import * as Flickity from 'flickity'
     const render = () => {
         renderer.render(scene, camera);
     }
+
+    setInterval(function() { document.querySelector(".next").click() }, 5000);
 
     initStage();
     initScene();
