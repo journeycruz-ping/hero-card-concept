@@ -8,7 +8,7 @@ import * as Flickity from 'flickity'
         scene,
         renderer,
         camera,
-        cameraLookAt = new THREE.Vector3(0, 0, 0),
+        cameraLookAt = new THREE.Vector3(0, 75, 10),
         cameraTarget = new THREE.Vector3(0, 0, 800),
         windowWidth,
         windowHeight,
@@ -25,8 +25,8 @@ import * as Flickity from 'flickity'
         currentGraphic = 0,
         graphicCanvas,
         gctx,
-        canvasWidth = 280,
-        canvasHeight = 280,
+        canvasWidth = 240,
+        canvasHeight = 240,
         graphicPixels,
         particles = [],
         graphicOffsetX = canvasWidth / 2,
@@ -60,7 +60,6 @@ import * as Flickity from 'flickity'
         renderer.setSize(windowWidth, windowHeight);
         mainContainer.appendChild(renderer.domElement);
 
-        scene.background = new THREE.Color(0xFFFFFF);
     }
 
     // -----------------------
@@ -70,13 +69,14 @@ import * as Flickity from 'flickity'
         const fieldOfView = 90;
         const aspectRatio = windowWidth / windowHeight;
         const nearPlane = 0.1;
-        const farPlane = 1000;
-        camera = new THREE.PerspectiveCamera(
-            fieldOfView,
-            aspectRatio,
-            nearPlane,
-            farPlane,
-        );
+        const farPlane = 2100;
+        camera = new THREE.OrthographicCamera(windowWidth / -1.5, windowWidth / 1, windowHeight / 1.5, windowHeight / -1.12, 0.01, 5000);
+        // camera = new THREE.PerspectiveCamera(
+        //     fieldOfView,
+        //     aspectRatio,
+        //     nearPlane,
+        //     farPlane,
+        // );
         camera.position.z = 800;
     }
 
@@ -253,14 +253,18 @@ import * as Flickity from 'flickity'
     }
 
     const createBgObject = (i) => {
-        const geometry = new THREE.SphereGeometry(10, 6, 6);
+        // const geometry = new THREE.SphereGeometry(10, 6, 6);
+        // const material = new THREE.MeshBasicMaterial({ color: 0xdddddd });
+        // const sphere = new THREE.Mesh(geometry, material);
+        // scene.add(sphere);
+        const geometry = new THREE.BoxGeometry(10, 10, 10);
         const material = new THREE.MeshBasicMaterial({ color: 0xdddddd });
-        const sphere = new THREE.Mesh(geometry, material);
-        scene.add(sphere);
+        const cube = new THREE.Mesh(geometry, material);
+        scene.add(cube);
         const x = Math.random() * windowWidth * 2 - windowWidth;
         const y = Math.random() * windowHeight * 2 - windowHeight;
         const z = Math.random() * -2000 - 200;
-        sphere.position.set(x, y, z);
+        cube.position.set(x, y, z);
     }
 
     // -----------------------
@@ -319,17 +323,18 @@ import * as Flickity from 'flickity'
     }
 
     const render = () => {
+        renderer.setClearColor(0x000000, 0); // the default
         renderer.render(scene, camera);
     }
 
-    setInterval(function() { document.querySelector(".next").click() }, 5000);
+    setInterval(function() { document.querySelector(".next").click() }, 4000);
 
     initStage();
     initScene();
     initCanvas();
     initCamera();
     initSlider();
-    // initBgObjects();
+    initBgObjects();
     updateGraphic();
     animate();
 }
