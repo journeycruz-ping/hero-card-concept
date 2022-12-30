@@ -31,7 +31,31 @@ import * as Flickity from "flickity";
         particles = [],
         graphicOffsetX = canvasWidth / 2,
         graphicOffsetY = canvasHeight / 2,
-        frustumSize = 5;
+        frustumSize = 5,
+        aspect = window.innerHeight / window.innerWidth;
+
+    const resize = () => {
+        if (windowWidth <= 900) {
+            const fieldOfView = 75;
+            const aspectRatio = windowWidth / windowHeight;
+            const nearPlane = 1;
+            const farPlane = 3000;
+            camera = new THREE.PerspectiveCamera(
+                fieldOfView,
+                aspectRatio,
+                nearPlane,
+                farPlane);
+            camera.position.z = 800;
+            camera.aspect = windowWidth / windowHeight;
+        }
+        if (windowWidth <= 2193) {
+            initCamera(windowWidth / -1.5, windowWidth / 1.7, 944 / 2, 944 / -2, 0.01, 5000);
+        }
+
+        if (windowWidth > 2193) {
+            initCamera(windowWidth / -1.9, windowWidth / 1.2, 944 / 2, 944 / -2, 0.01, 5000);
+        }
+    }
 
     // -----------------------
     // Setup stage
@@ -298,29 +322,6 @@ import * as Flickity from "flickity";
         cameraTarget.y = mouseY / 20;
     };
 
-    const resize = () => {
-        if (windowWidth <= 900) {
-            const fieldOfView = 75;
-            const aspectRatio = windowWidth / windowHeight;
-            const nearPlane = 1;
-            const farPlane = 3000;
-            camera = new THREE.PerspectiveCamera(
-                fieldOfView,
-                aspectRatio,
-                nearPlane,
-                farPlane);
-            camera.position.z = 800;
-            camera.aspect = windowWidth / windowHeight;
-        }
-        if (windowWidth <= 2193) {
-            initCamera(windowWidth / -1.5, windowWidth / 1.7, 944 / 2, 944 / -2, 0.01, 5000);
-        }
-
-        if (windowWidth > 2193) {
-            initCamera(windowWidth / -2.05, windowWidth / 1.15, 944 / 2, 944 / -2, 0.01, 5000);
-        }
-    }
-
     const onWindowResize = () => {
         setWindowSize();
 
@@ -354,20 +355,13 @@ import * as Flickity from "flickity";
         document.querySelector(".next").click();
     }, 4000);
 
-
-
     try {
-
         document.addEventListener("DOMContentLoaded", function() {
             resize();
         })
-
     } catch (error) {
         throw new Error(error)
     }
-
-
-
 
     initStage();
     initScene();
