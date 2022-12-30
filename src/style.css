@@ -1,8 +1,95 @@
-@import url('https://fonts.googleapis.com/css?family=Montserrat:400,400i,700,700i');
+@font-face {
+    font-family: 'Gotham Cond';
+    src: url('/static/fonts/GothamCond-XBlack_Web.woff2') format('woff2');
+    font-weight: 800;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "Gotham";
+    src: url('/static/fonts/Gotham-Book_Web.woff2') format('woff2');
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "Gotham";
+    src: url('/static/fonts/Gotham-Medium_Web.woff2') format('woff2');
+    font-weight: 350;
+    font-style: normal;
+    font-display: swap;
+}
+
+@keyframes slide-color-in {
+    from {
+        width: 0;
+    }
+    to {
+        width: 100%;
+    }
+}
+
+.font-highlighter--101 {
+    --initial-text-color: #051727;
+    --slide-text-color: #fff;
+    --initial-bg-color: transparent;
+    --slide-bg-color: #051727;
+    /* stylelint-disable-next-line max-line-length */
+    background-image: linear-gradient(90deg, var(--initial-bg-color) 0%, var(--initial-bg-color) 50%, var(--slide-bg-color) 50%, var(--slide-bg-color) 100%);
+    background-size: 200%;
+    transition: background-position 0.4s cubic-bezier(0.47, 0.1, 1, 0.63), color 0.4s linear;
+    transition-delay: 1s;
+    opacity: 0;
+}
+
+.font-highlighter--101.highlight {
+    opacity: 1 !important;
+    color: white;
+    background-position: -100% 0;
+    position: relative;
+    display: inline-flex;
+    overflow: hidden;
+    padding: 0 8px;
+}
+
+.font-highlighter--101.highlight::before {
+    content: attr(data-content);
+    position: absolute;
+    color: #051727;
+    overflow: hidden;
+    width: 0;
+    left: 0;
+}
+
+.font-highlighter--101.highlight.active::before {
+    animation: slide-color-in 0.4s cubic-bezier(0.47, 0.1, 1, 0.63);
+    animation-delay: 1s;
+    animation-fill-mode: forwards;
+}
+
+.heading {
+    font-family: "Gotham Cond", Helvitica, sans-sefif;
+    color: rgb(5, 23, 39);
+    display: inline-block;
+    font-size: 64px;
+    font-weight: 800;
+    line-height: 64px;
+}
+
+.subheading {
+    font-family: "Gotham", Helvitica, sans-sefif;
+    color: rgb(5, 23, 39);
+    display: inline-block;
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 28px;
+}
+
 html {
     box-sizing: border-box;
     font-size: 14px;
-    font-family: 'Montserrat', sans-serif;
     line-height: 1.2;
     -ms-text-size-adjust: 100%;
     -webkit-text-size-adjust: 100%;
@@ -15,7 +102,6 @@ body {
     -webkit-font-smoothing: antialiased;
 }
 
-*,
  :after,
  :before {
     box-sizing: inherit;
@@ -40,26 +126,30 @@ main {
 }
 
 .cta-btn_1 {
-    margin-right: 24px;
+    font-family: "Gotham", helvetica, sans-serif;
+    font-weight: 350;
+    margin-right: 13px;
     background-color: rgb(179, 40, 45);
+    border: 1px solid rgb(179, 40, 45);
     color: white;
     cursor: pointer;
     font-size: 14px;
-    font-weight: bold;
     line-height: 21px;
-    padding: 8px 16px;
+    padding: 5px 16px;
     text-align: center;
+    box-sizing: border-box;
 }
 
 .cta-btn_2 {
+    font-family: "Gotham", helvetica, sans-serif;
+    font-weight: 350;
     background-color: rgba(0, 0, 0, 0);
     color: rgb(179, 40, 45);
     border: 1px solid rgb(179, 40, 45);
     cursor: pointer;
     font-size: 14px;
-    font-weight: bold;
     line-height: 21px;
-    padding: 8px 16px;
+    padding: 5px 16px;
     text-align: center;
 }
 
@@ -91,7 +181,12 @@ li svg {
 }
 
 .img-grid p {
-    font-size: 14px;
+    font-family: "Gotham", Helvetica, sans-serif;
+    font-weight: 400;
+    line-height: 24px;
+    color: rgb(5, 23, 39);
+    display: inline-block;
+    font-size: 16px;
 }
 
 .intro-carousel {
@@ -120,17 +215,11 @@ img {
     position: relative;
     transform: translateY(140px);
     z-index: 2;
-    margin-left: 57px;
+    margin-left: 65px;
 }
 
 h1 {
     font-size: 42px;
-    margin: 0;
-}
-
-h2 {
-    font-size: 16px;
-    text-transform: uppercase;
     margin: 0;
 }
 
