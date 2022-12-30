@@ -117,7 +117,7 @@ import * as Flickity from "flickity";
 
     Particle.prototype.init = function(i) {
         const particle = new THREE.Object3D();
-        const geometryCore = new THREE.SphereGeometry(4, 4, 4);
+        const geometryCore = new THREE.SphereGeometry(4.25, 4.25, 4.25);
         const materialCore = new THREE.MeshBasicMaterial({
             color: colors[i % colors.length],
         });
@@ -193,18 +193,18 @@ import * as Flickity from "flickity";
     // -----------------------
 
     function randomPos(vector, outFrame = false) {
-        const radius = outFrame ? windowWidth * 5 : windowWidth * -5;
+        const radius = outFrame ? (windowWidth * 2) : (windowWidth * -2);
         const centerX = 0;
         const centerY = 0;
 
         // ensure that p(r) ~ r instead of p(r) ~ constant
-        const r = 550;
+        const r = windowWidth + radius * Math.random();
         const angle = Math.random() * Math.PI * 2;
 
         // compute desired coordinates
         vector.x = centerX + r * Math.cos(angle);
         vector.y = centerY + r * Math.sin(angle);
-        vector.z = Math.random() * 0.5;
+        vector.z = Math.random() * windowWidth;
     }
 
     // -----------------------
@@ -341,7 +341,7 @@ import * as Flickity from "flickity";
 
     setInterval(function() {
         document.querySelector(".next").click();
-    }, 8000);
+    }, 4000);
 
     initStage();
     initScene();
