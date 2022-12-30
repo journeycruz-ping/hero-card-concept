@@ -1,6 +1,6 @@
-import './style.css'
-import * as THREE from 'three'
-import * as Flickity from 'flickity'
+import "./style.css";
+import * as THREE from "three";
+import * as Flickity from "flickity";
 
 {
     let body,
@@ -8,7 +8,7 @@ import * as Flickity from 'flickity'
         scene,
         renderer,
         camera,
-        cameraLookAt = new THREE.Vector3(0, 75, 10),
+        cameraLookAt = new THREE.Vector3(-50, 75, 10),
         cameraTarget = new THREE.Vector3(0, 0, 800),
         windowWidth,
         windowHeight,
@@ -20,7 +20,7 @@ import * as Flickity from 'flickity'
         gui,
         stats,
         contentElement,
-        colors = ['#F7A541', '#F45D4C', '#FA2E59', '#4783c3', '#9c6cb7'],
+        colors = ["#b3282d", "#992226", "#801c20", "#d6311b", "#d84332"],
         graphics,
         currentGraphic = 0,
         graphicCanvas,
@@ -30,21 +30,21 @@ import * as Flickity from 'flickity'
         graphicPixels,
         particles = [],
         graphicOffsetX = canvasWidth / 2,
-        graphicOffsetY = canvasHeight / 2;
+        graphicOffsetY = canvasHeight / 2,
+        frustumSize = 5;
 
     // -----------------------
     // Setup stage
     // -----------------------
     const initStage = () => {
-        body = document.querySelector('body');
-        mainContainer = document.querySelector('#main');
-        contentElement = document.querySelector('.intro-content');
+        body = document.querySelector("body");
+        mainContainer = document.querySelector("#main");
+        contentElement = document.querySelector(".intro-content");
 
         setWindowSize();
-
-        window.addEventListener('resize', onWindowResize, false);
-        window.addEventListener('mousemove', onMouseMove, false);
-    }
+        window.addEventListener("resize", onWindowResize, false);
+        window.addEventListener("mousemove", onMouseMove, false);
+    };
 
     // -----------------------
     // Setup scene
@@ -54,42 +54,40 @@ import * as Flickity from 'flickity'
 
         renderer = new THREE.WebGLRenderer({
             alpha: true,
-            antialias: true
+            antialias: true,
         });
         renderer.setPixelRatio(window.devicePixelRatio);
         renderer.setSize(windowWidth, windowHeight);
         mainContainer.appendChild(renderer.domElement);
-
-    }
+    };
 
     // -----------------------
     // Setup camera
     // -----------------------
     const initCamera = () => {
-        const fieldOfView = 90;
-        const aspectRatio = windowWidth / windowHeight;
-        const nearPlane = 0.1;
-        const farPlane = 2100;
-        camera = new THREE.OrthographicCamera(windowWidth / -1.5, windowWidth / 1, windowHeight / 1.5, windowHeight / -1.12, 0.01, 5000);
-        // camera = new THREE.PerspectiveCamera(
-        //     fieldOfView,
-        //     aspectRatio,
-        //     nearPlane,
-        //     farPlane,
-        // );
+        camera = new THREE.OrthographicCamera(
+            windowWidth / -2.05, // left
+            windowWidth / 1.15, // right
+            windowHeight / 2, // top
+            windowHeight / -2, //bottom make 0
+            0.01, // near
+            5000 // far
+        );
+
         camera.position.z = 800;
-    }
+        camera.position.x += -1000;
+    };
 
     // -----------------------
     // Setup canvas
     // -----------------------
     const initCanvas = () => {
-        graphicCanvas = document.createElement('canvas');
+        graphicCanvas = document.createElement("canvas");
         graphicCanvas.width = canvasWidth;
         graphicCanvas.height = canvasHeight;
-        gctx = graphicCanvas.getContext('2d');
-        graphics = document.querySelectorAll('.intro-cell > img');
-    }
+        gctx = graphicCanvas.getContext("2d");
+        graphics = document.querySelectorAll(".intro-cell > img");
+    };
 
     // -----------------------
     // Setup light
@@ -106,7 +104,7 @@ import * as Flickity from 'flickity'
         const backLight = new THREE.DirectionalLight(0xffffff, 1);
         backLight.position.set(0, 0, -20);
         scene.add(backLight);
-    }
+    };
 
     // -----------------------
     // Setup particles
@@ -121,7 +119,7 @@ import * as Flickity from 'flickity'
         const particle = new THREE.Object3D();
         const geometryCore = new THREE.SphereGeometry(4, 4, 4);
         const materialCore = new THREE.MeshBasicMaterial({
-            color: '#D73621'
+            color: colors[i % colors.length],
         });
 
         const box = new THREE.Mesh(geometryCore, materialCore);
@@ -131,9 +129,11 @@ import * as Flickity from 'flickity'
         const pos = getGraphicPos(graphicPixels[i]);
         particle.targetPosition = new THREE.Vector3(pos.x, pos.y, pos.z);
 
-        particle.position.set(windowWidth * 0.5, windowHeight * 0.5, -10 * Math.random() + 20);
+        particle.position.set(
+            windowWidth * 0.5,
+            windowHeight * 0.5, -10 * Math.random() + 20
+        );
         randomPos(particle.position);
-
 
         // for (var i = 0; i < box.geometry.vertices.length; i++) {
         //     box.geometry.vertices[i].x += -2 + Math.random() * 4;
@@ -142,16 +142,16 @@ import * as Flickity from 'flickity'
         // }
         particle.add(box);
         this.particle = particle;
-    }
+    };
 
     Particle.prototype.updateRotation = function() {
         this.particle.rotation.x += this.vx;
         this.particle.rotation.y += this.vy;
-    }
+    };
 
     Particle.prototype.updatePosition = function() {
         this.particle.position.lerp(this.particle.targetPosition, 0.13);
-    }
+    };
 
     function updateParticles() {
         for (var i = 0, l = particles.length; i < l; i++) {
@@ -166,7 +166,7 @@ import * as Flickity from 'flickity'
         const posZ = -20 * Math.random() + 40;
 
         return { x: posX, y: posY, z: posZ };
-    }
+    };
 
     const setParticles = () => {
         for (let i = 0; i < graphicPixels.length; i++) {
@@ -186,20 +186,19 @@ import * as Flickity from 'flickity'
         for (let i = graphicPixels.length; i < particles.length; i++) {
             randomPos(particles[i].particle.targetPosition, true);
         }
-
-    }
+    };
 
     // -----------------------
     // Random position
     // -----------------------
 
     function randomPos(vector, outFrame = false) {
-        const radius = outFrame ? (windowWidth * 5) : (windowWidth * -5);
+        const radius = outFrame ? windowWidth * 5 : windowWidth * -5;
         const centerX = 0;
         const centerY = 0;
 
         // ensure that p(r) ~ r instead of p(r) ~ constant
-        const r = 875;
+        const r = 550;
         const angle = Math.random() * Math.PI * 2;
 
         // compute desired coordinates
@@ -224,10 +223,10 @@ import * as Flickity from 'flickity'
                 const x = (i / 4) % canvasWidth;
                 const y = canvasHeight - Math.floor(Math.floor(i / canvasWidth) / 4);
 
-                if ((x && x % 2 == 0) && (y && y % 2 == 0)) {
+                if (x && x % 2 == 0 && y && y % 2 == 0) {
                     graphicPixels.push({
                         x: x,
-                        y: y
+                        y: y,
                     });
                 }
             }
@@ -240,7 +239,7 @@ import * as Flickity from 'flickity'
         setTimeout(() => {
             setParticles();
         }, 500);
-    }
+    };
 
     // -----------------------
     // Setup background objects
@@ -250,14 +249,14 @@ import * as Flickity from 'flickity'
         for (let i = 0; i < 40; i++) {
             createBgObject(i);
         }
-    }
+    };
 
     const createBgObject = (i) => {
         // const geometry = new THREE.SphereGeometry(10, 6, 6);
         // const material = new THREE.MeshBasicMaterial({ color: 0xdddddd });
         // const sphere = new THREE.Mesh(geometry, material);
         // scene.add(sphere);
-        const geometry = new THREE.BoxGeometry(10, 10, 10);
+        const geometry = new THREE.BoxGeometry(12, 12, 12);
         const material = new THREE.MeshBasicMaterial({ color: 0xdddddd });
         const cube = new THREE.Mesh(geometry, material);
         scene.add(cube);
@@ -265,21 +264,21 @@ import * as Flickity from 'flickity'
         const y = Math.random() * windowHeight * 2 - windowHeight;
         const z = Math.random() * -2000 - 200;
         cube.position.set(x, y, z);
-    }
+    };
 
     // -----------------------
     // Setup slider
     // -----------------------
 
     const initSlider = () => {
-        const elem = document.querySelector('.intro-carousel');
+        const elem = document.querySelector(".intro-carousel");
 
         const flkty = new Flickity(elem, {
             // options
-            cellAlign: 'center',
+            cellAlign: "center",
             pageDots: false,
             wrapAround: true,
-            resize: true
+            resize: true,
         });
 
         function listener() {
@@ -287,32 +286,45 @@ import * as Flickity from 'flickity'
             updateGraphic();
         }
 
-        flkty.on('select', listener);
-    }
+        flkty.on("select", listener);
+    };
 
     // setInterval(function() { document.querySelector(".next").click() }, 2000);
 
     const onMouseMove = (event) => {
-        mouseX = (event.clientX - windowHalfWidth);
-        mouseY = (event.clientY - windowHalfHeight);
-        cameraTarget.x = (mouseX * -1) / 18;
-        cameraTarget.y = mouseY / 18;
-    }
+        mouseX = event.clientX - windowHalfWidth;
+        mouseY = event.clientY - windowHalfHeight;
+        cameraTarget.x = (mouseX * -1) / 20;
+        cameraTarget.y = mouseY / 20;
+    };
 
     const onWindowResize = () => {
         setWindowSize();
-
-        camera.aspect = windowWidth / windowHeight;
-        camera.updateProjectionMatrix();
+        if (windowWidth <= 900) {
+            const fieldOfView = 75;
+            const aspectRatio = windowWidth / windowHeight;
+            const nearPlane = 1;
+            const farPlane = 3000;
+            camera = new THREE.PerspectiveCamera(
+                fieldOfView,
+                aspectRatio,
+                nearPlane,
+                farPlane);
+            camera.position.z = 800;
+            camera.aspect = windowWidth / windowHeight;
+        } else {
+            initCamera();
+        }
+        // camera.updateProjectionMatrix();
         renderer.setSize(windowWidth, windowHeight);
-    }
+    };
 
     const setWindowSize = () => {
         windowWidth = window.innerWidth;
         windowHeight = window.innerHeight;
         windowHalfWidth = windowWidth / 2;
         windowHalfHeight = windowHeight / 2;
-    }
+    };
 
     const animate = () => {
         requestAnimationFrame(animate);
@@ -320,18 +332,21 @@ import * as Flickity from 'flickity'
         camera.position.lerp(cameraTarget, 0.2);
         camera.lookAt(cameraLookAt);
         render();
-    }
+    };
 
     const render = () => {
         renderer.setClearColor(0x000000, 0); // the default
         renderer.render(scene, camera);
-    }
+    };
 
-    setInterval(function() { document.querySelector(".next").click() }, 4000);
+    setInterval(function() {
+        document.querySelector(".next").click();
+    }, 8000);
 
     initStage();
     initScene();
     initCanvas();
+    initLights();
     initCamera();
     initSlider();
     initBgObjects();

@@ -24,6 +24,74 @@ body {
 main {
     position: relative;
     perspective: 1500px;
+    background: linear-gradient(transparent, #F5F5F6);
+}
+
+.gradient {
+    position: absolute;
+    bottom: 0;
+    height: 150px;
+    width: 100%;
+    background: linear-gradient(transparent, #F5F5F6);
+}
+
+.cta-btns {
+    margin-top: 32px;
+}
+
+.cta-btn_1 {
+    margin-right: 24px;
+    background-color: rgb(179, 40, 45);
+    color: white;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: bold;
+    line-height: 21px;
+    padding: 8px 16px;
+    text-align: center;
+}
+
+.cta-btn_2 {
+    background-color: rgba(0, 0, 0, 0);
+    color: rgb(179, 40, 45);
+    border: 1px solid rgb(179, 40, 45);
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: bold;
+    line-height: 21px;
+    padding: 8px 16px;
+    text-align: center;
+}
+
+.img-grid {
+    margin-top: 150px;
+    grid-column: span 6/span 6;
+    position: relative;
+}
+
+.grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    line-height: 24px;
+    max-width: 575px;
+    row-gap: 12px;
+    tab-size: 4;
+    column-gap: 2.5rem;
+    padding: 0;
+    margin-top: 24px;
+}
+
+.grid li {
+    display: flex;
+}
+
+li svg {
+    height: 75px;
+}
+
+.img-grid p {
+    font-size: 14px;
 }
 
 .intro-carousel {
@@ -50,8 +118,9 @@ img {
 
 .intro-text {
     position: relative;
-    transform: translateY(250px);
+    transform: translateY(175px);
     z-index: 2;
+    margin-left: 57px;
 }
 
 h1 {
@@ -67,14 +136,12 @@ h2 {
 
 p {
     font-size: 18px;
+    margin-top: 24px;
     line-height: 1.5;
 }
 
 a {
     display: inline-block;
-    padding: 8px 16px;
-    background: #b3282d;
-    color: white;
 }
 
 .flickity-button {
@@ -102,6 +169,9 @@ a {
 canvas {
     transform: none;
     z-index: 0;
+    min-height: 700px;
+    height: 89.3vh !important;
+    max-height: 768px !important;
 }
 
 main {
@@ -111,7 +181,16 @@ main {
     overflow-x: hidden;
 }
 
-@media screen and (min-width: 600px) {
+.next-section {
+    max-width: 1376px;
+    background: #F5F5F6;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    height: 500px;
+}
+
+
+/* @media screen and (min-width: 600px) {
     canvas {
         max-height: 89.3vh;
     }
@@ -119,6 +198,6 @@ main {
 
 @media screen and (min-width: 900px) {
     canvas {
-        transform: translateX(200px);
+        transform: translateX(-200px);
     }
-}
+} */
