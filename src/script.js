@@ -64,14 +64,14 @@ import * as Flickity from "flickity";
     // -----------------------
     // Setup camera
     // -----------------------
-    const initCamera = () => {
+    const initCamera = (left, right, top, bottom, near, far) => {
         camera = new THREE.OrthographicCamera(
-            windowWidth / -2.05, // left
-            windowWidth / 1.15, // right
-            windowHeight / 2, // top
-            windowHeight / -2, //bottom make 0
-            0.01, // near
-            5000 // far
+            left,
+            right,
+            top,
+            bottom,
+            near,
+            far
         );
 
         camera.position.z = 800;
@@ -298,8 +298,7 @@ import * as Flickity from "flickity";
         cameraTarget.y = mouseY / 20;
     };
 
-    const onWindowResize = () => {
-        setWindowSize();
+    const resize = () => {
         if (windowWidth <= 900) {
             const fieldOfView = 75;
             const aspectRatio = windowWidth / windowHeight;
@@ -312,9 +311,21 @@ import * as Flickity from "flickity";
                 farPlane);
             camera.position.z = 800;
             camera.aspect = windowWidth / windowHeight;
-        } else {
-            initCamera();
         }
+        if (windowWidth <= 2193) {
+            initCamera(windowWidth / -1.5, windowWidth / 1.7, 944 / 2, 944 / -2, 0.01, 5000);
+        }
+
+        if (windowWidth > 2193) {
+            initCamera(windowWidth / -2.05, windowWidth / 1.15, 944 / 2, 944 / -2, 0.01, 5000);
+        }
+    }
+
+    const onWindowResize = () => {
+        setWindowSize();
+
+        resize();
+
         // camera.updateProjectionMatrix();
         renderer.setSize(windowWidth, windowHeight);
     };
@@ -343,11 +354,25 @@ import * as Flickity from "flickity";
         document.querySelector(".next").click();
     }, 4000);
 
+
+
+    try {
+
+        document.addEventListener("DOMContentLoaded", function() {
+            resize();
+        })
+
+    } catch (error) {
+        throw new Error(error)
+    }
+
+
+
+
     initStage();
     initScene();
     initCanvas();
     initLights();
-    initCamera();
     initSlider();
     initBgObjects();
     updateGraphic();

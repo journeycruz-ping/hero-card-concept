@@ -64,7 +64,7 @@ main {
 }
 
 .img-grid {
-    margin-top: 150px;
+    margin-top: 80px;
     grid-column: span 6/span 6;
     position: relative;
 }
@@ -118,7 +118,7 @@ img {
 
 .intro-text {
     position: relative;
-    transform: translateY(175px);
+    transform: translateY(140px);
     z-index: 2;
     margin-left: 57px;
 }
