@@ -1,6 +1,18 @@
 import "./style.css";
-import * as THREE from "three";
-import * as Flickity from "flickity";
+import {
+    BoxGeometry,
+    Vector3,
+    Scene,
+    WebGLRenderer,
+    OrthographicCamera,
+    DirectionalLight,
+    Object3D,
+    SphereGeometry,
+    MeshBasicMaterial,
+    Mesh,
+    PerspectiveCamera
+} from "three";
+import Flickity from "flickity";
 
 {
     let body,
@@ -8,25 +20,22 @@ import * as Flickity from "flickity";
         scene,
         renderer,
         camera,
-        cameraLookAt = new THREE.Vector3(-50, 75, 10),
-        cameraTarget = new THREE.Vector3(0, 0, 800),
+        cameraLookAt = new Vector3(-50, 75, 10),
+        cameraTarget = new Vector3(0, 0, 800),
         windowWidth,
         windowHeight,
         windowHalfWidth,
         windowHalfHeight,
-        points,
         mouseX = 0,
         mouseY = 0,
-        gui,
-        stats,
         contentElement,
         colors = ["#b3282d", "#992226", "#801c20", "#d6311b", "#d84332"],
         graphics,
         currentGraphic = 0,
         graphicCanvas,
         gctx,
-        canvasWidth = 300,
-        canvasHeight = 300,
+        canvasWidth = 270,
+        canvasHeight = 270,
         graphicPixels,
         particles = [],
         graphicOffsetX = canvasWidth / 2,
@@ -49,9 +58,9 @@ import * as Flickity from "flickity";
     // Setup scene
     // -----------------------
     const initScene = () => {
-        scene = new THREE.Scene();
+        scene = new Scene();
 
-        renderer = new THREE.WebGLRenderer({
+        renderer = new WebGLRenderer({
             alpha: true,
             antialias: true,
         });
@@ -64,7 +73,7 @@ import * as Flickity from "flickity";
     // Setup camera
     // -----------------------
     const initCamera = (left, right, top, bottom, near, far) => {
-        camera = new THREE.OrthographicCamera(
+        camera = new OrthographicCamera(
             left,
             right,
             top,
@@ -92,15 +101,15 @@ import * as Flickity from "flickity";
     // Setup light
     // -----------------------
     const initLights = () => {
-        const shadowLight = new THREE.DirectionalLight(0xffffff, 2);
+        const shadowLight = new DirectionalLight(0xffffff, 2);
         shadowLight.position.set(20, 0, 10);
         scene.add(shadowLight);
 
-        const light = new THREE.DirectionalLight(0xffffff, 1.5);
+        const light = new DirectionalLight(0xffffff, 1.5);
         light.position.set(-20, 0, 20);
         scene.add(light);
 
-        const backLight = new THREE.DirectionalLight(0xffffff, 1);
+        const backLight = new DirectionalLight(0xffffff, 1);
         backLight.position.set(0, 0, -20);
         scene.add(backLight);
     };
@@ -116,18 +125,18 @@ import * as Flickity from "flickity";
 
     Particle.prototype.init = function(i) {
         try {
-            const particle = new THREE.Object3D();
-            const geometryCore = new THREE.SphereGeometry(4.25, 4.25, 4.25);
-            const materialCore = new THREE.MeshBasicMaterial({
+            const particle = new Object3D();
+            const geometryCore = new SphereGeometry(4.25, 4.25, 4.25);
+            const materialCore = new MeshBasicMaterial({
                 color: colors[i % colors.length],
             });
 
-            const box = new THREE.Mesh(geometryCore, materialCore);
+            const box = new Mesh(geometryCore, materialCore);
             box.geometry.__dirtyVertices = true;
             box.geometry.dynamic = true;
 
             const pos = getGraphicPos(graphicPixels[i]);
-            particle.targetPosition = new THREE.Vector3(pos.x, pos.y, pos.z);
+            particle.targetPosition = new Vector3(pos.x, pos.y, pos.z);
 
             particle.position.set(
                 windowWidth * 0.5,
@@ -250,7 +259,7 @@ import * as Flickity from "flickity";
 
         setTimeout(() => {
             setParticles();
-        }, 700);
+        }, 500);
     };
 
     // -----------------------
@@ -264,13 +273,9 @@ import * as Flickity from "flickity";
     };
 
     const createBgObject = (i) => {
-        // const geometry = new THREE.SphereGeometry(10, 6, 6);
-        // const material = new THREE.MeshBasicMaterial({ color: 0xdddddd });
-        // const sphere = new THREE.Mesh(geometry, material);
-        // scene.add(sphere);
-        const geometry = new THREE.BoxGeometry(12, 12, 12);
-        const material = new THREE.MeshBasicMaterial({ color: 0xdddddd });
-        const cube = new THREE.Mesh(geometry, material);
+        const geometry = new BoxGeometry(12, 12, 12);
+        const material = new MeshBasicMaterial({ color: 0xdddddd });
+        const cube = new Mesh(geometry, material);
         scene.add(cube);
         const x = Math.random() * windowWidth * 2 - windowWidth;
         const y = Math.random() * windowHeight * 2 - windowHeight;
@@ -331,7 +336,7 @@ import * as Flickity from "flickity";
             const aspectRatio = windowWidth / windowHeight;
             const nearPlane = 1;
             const farPlane = 3000;
-            camera = new THREE.PerspectiveCamera(
+            camera = new PerspectiveCamera(
                 fieldOfView,
                 aspectRatio,
                 nearPlane,
@@ -364,6 +369,7 @@ import * as Flickity from "flickity";
 
     setInterval(function() {
         document.querySelector(".next").click();
+
     }, 4000);
 
     try {
