@@ -83,7 +83,6 @@ import Flickity from "flickity";
         );
 
         camera.position.z = 800;
-        camera.position.x += -1000;
     };
 
     // -----------------------
@@ -162,7 +161,7 @@ import Flickity from "flickity";
     };
 
     Particle.prototype.updatePosition = function() {
-        this.particle.position.lerp(this.particle.targetPosition, 0.24);
+        this.particle.position.lerp(this.particle.targetPosition, 0.1);
     };
 
     function updateParticles() {
@@ -219,7 +218,7 @@ import Flickity from "flickity";
         const centerY = 0;
 
         // ensure that p(r) ~ r instead of p(r) ~ constant
-        const r = windowWidth + radius * Math.random();
+        const r = 750
         const angle = Math.random() * Math.PI * 2;
 
         // compute desired coordinates
@@ -331,7 +330,7 @@ import Flickity from "flickity";
     };
 
     const resize = () => {
-        if (windowWidth <= 900) {
+        if (windowWidth <= 1025) {
             const fieldOfView = 75;
             const aspectRatio = windowWidth / windowHeight;
             const nearPlane = 1;
@@ -344,12 +343,34 @@ import Flickity from "flickity";
             camera.position.z = 800;
             camera.aspect = windowWidth / windowHeight;
         }
-
-        if (windowWidth >= 900 && windowWidth <= 1599) {
-            initCamera(windowWidth / -1, windowWidth / 1.7, 944 / 2.4, 944 / -1.6, 0.01, 5000);
+        if (windowWidth >= 1026 && windowWidth <= 1269) {
+            initCamera(windowWidth / -0.6, windowWidth / 2.2, 944 / 1.5, 944 / -1, 0.01, 5000);
         }
-
-        if (windowWidth >= 1600) {
+        if (windowWidth >= 1270 && windowWidth <= 1389) {
+            initCamera(windowWidth / -0.9, windowWidth / 2.7, 944 / 2.2, 944 / -1.5, 0.01, 5000);
+        }
+        if (windowWidth >= 1390 && windowWidth <= 1477) {
+            initCamera(windowWidth / -1, windowWidth / 2.5, 944 / 2.4, 944 / -1.6, 0.01, 5000);
+        }
+        if (windowWidth >= 1478 && windowWidth <= 1604) {
+            initCamera(windowWidth / -1.2, windowWidth / 1.8, 944 / 2.4, 944 / -1.6, 0.01, 5000);
+        }
+        if (windowWidth >= 1605 && windowWidth <= 1771) {
+            initCamera(windowWidth / -1.2, windowWidth / 1.7, 944 / 2.4, 944 / -1.6, 0.01, 5000);
+        }
+        if (windowWidth >= 1772 && windowWidth <= 1892) {
+            initCamera(windowWidth / -1.4, windowWidth / 1.7, 944 / 2.4, 944 / -1.6, 0.01, 5000);
+        }
+        if (windowWidth >= 1893 && windowWidth <= 2127) {
+            initCamera(windowWidth / -1.6, windowWidth / 1.5, 944 / 2.4, 944 / -1.6, 0.01, 5000);
+        }
+        if (windowWidth >= 2128 && windowWidth <= 2356) {
+            initCamera(windowWidth / -1.8, windowWidth / 1.4, 944 / 2.4, 944 / -1.6, 0.01, 5000);
+        }
+        if (windowWidth >= 2357 && windowWidth <= 2549) {
+            initCamera(windowWidth / -2, windowWidth / 1.3, 944 / 2.4, 944 / -1.6, 0.01, 5000);
+        }
+        if (windowWidth >= 2550) {
             initCamera(windowWidth * -.4762, 2048, 944 / 2.4, 944 / -1.6, 0.01, 5000);
         }
     }
@@ -367,10 +388,7 @@ import Flickity from "flickity";
         renderer.render(scene, camera);
     };
 
-    setInterval(function() {
-        document.querySelector(".next").click();
-
-    }, 4000);
+    setInterval(function() { document.querySelector(".next").click(); }, 4000);
 
     try {
         document.addEventListener("DOMContentLoaded", function() {

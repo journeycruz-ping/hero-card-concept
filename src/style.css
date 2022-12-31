@@ -84,6 +84,7 @@
     font-size: 20px;
     font-weight: 400;
     line-height: 28px;
+    margin-bottom: 0;
 }
 
 html {
@@ -121,7 +122,7 @@ main {
 }
 
 .cta-btns {
-    margin-top: 32px;
+    margin-top: 24px;
 }
 
 .cta-btn_1 {
@@ -186,6 +187,7 @@ li svg {
     color: rgb(5, 23, 39);
     display: inline-block;
     font-size: 16px;
+    margin-bottom: 0;
 }
 
 .intro-carousel {
