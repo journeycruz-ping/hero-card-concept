@@ -213,7 +213,7 @@ img {
 
 .intro-text {
     position: relative;
-    transform: translateY(140px);
+    transform: translateY(100px);
     z-index: 2;
     margin-left: 65px;
 }

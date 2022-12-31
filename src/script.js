@@ -25,37 +25,12 @@ import * as Flickity from "flickity";
         currentGraphic = 0,
         graphicCanvas,
         gctx,
-        canvasWidth = 240,
-        canvasHeight = 240,
+        canvasWidth = 300,
+        canvasHeight = 300,
         graphicPixels,
         particles = [],
         graphicOffsetX = canvasWidth / 2,
-        graphicOffsetY = canvasHeight / 2,
-        frustumSize = 5,
-        aspect = window.innerHeight / window.innerWidth;
-
-    const resize = () => {
-        if (windowWidth <= 900) {
-            const fieldOfView = 75;
-            const aspectRatio = windowWidth / windowHeight;
-            const nearPlane = 1;
-            const farPlane = 3000;
-            camera = new THREE.PerspectiveCamera(
-                fieldOfView,
-                aspectRatio,
-                nearPlane,
-                farPlane);
-            camera.position.z = 800;
-            camera.aspect = windowWidth / windowHeight;
-        }
-        if (windowWidth <= 2193) {
-            initCamera(windowWidth / -1.5, windowWidth / 1.7, 944 / 2, 944 / -2, 0.01, 5000);
-        }
-
-        if (windowWidth > 2193) {
-            initCamera(windowWidth / -1.9, windowWidth / 1.2, 944 / 2, 944 / -2, 0.01, 5000);
-        }
-    }
+        graphicOffsetY = canvasHeight / 2;
 
     // -----------------------
     // Setup stage
@@ -140,32 +115,36 @@ import * as Flickity from "flickity";
     }
 
     Particle.prototype.init = function(i) {
-        const particle = new THREE.Object3D();
-        const geometryCore = new THREE.SphereGeometry(4.25, 4.25, 4.25);
-        const materialCore = new THREE.MeshBasicMaterial({
-            color: colors[i % colors.length],
-        });
+        try {
+            const particle = new THREE.Object3D();
+            const geometryCore = new THREE.SphereGeometry(4.25, 4.25, 4.25);
+            const materialCore = new THREE.MeshBasicMaterial({
+                color: colors[i % colors.length],
+            });
 
-        const box = new THREE.Mesh(geometryCore, materialCore);
-        box.geometry.__dirtyVertices = true;
-        box.geometry.dynamic = false;
+            const box = new THREE.Mesh(geometryCore, materialCore);
+            box.geometry.__dirtyVertices = true;
+            box.geometry.dynamic = true;
 
-        const pos = getGraphicPos(graphicPixels[i]);
-        particle.targetPosition = new THREE.Vector3(pos.x, pos.y, pos.z);
+            const pos = getGraphicPos(graphicPixels[i]);
+            particle.targetPosition = new THREE.Vector3(pos.x, pos.y, pos.z);
 
-        particle.position.set(
-            windowWidth * 0.5,
-            windowHeight * 0.5, -10 * Math.random() + 20
-        );
-        randomPos(particle.position);
+            particle.position.set(
+                windowWidth * 0.5,
+                windowHeight * 0.5, -10 * Math.random() + 20
+            );
+            randomPos(particle.position);
 
-        // for (var i = 0; i < box.geometry.vertices.length; i++) {
-        //     box.geometry.vertices[i].x += -2 + Math.random() * 4;
-        //     box.geometry.vertices[i].y += -2 + Math.random() * 4;
-        //     box.geometry.vertices[i].z += -2 + Math.random() * 4;
-        // }
-        particle.add(box);
-        this.particle = particle;
+            // for (var i = 0; i < box.geometry.vertices.length; i++) {
+            //     box.geometry.vertices[i].x += -2 + Math.random() * 4;
+            //     box.geometry.vertices[i].y += -2 + Math.random() * 4;
+            //     box.geometry.vertices[i].z += -2 + Math.random() * 4;
+            // }
+            particle.add(box);
+            this.particle = particle;
+        } catch (err) {
+            throw new Error(error);
+        }
     };
 
     Particle.prototype.updateRotation = function() {
@@ -174,7 +153,7 @@ import * as Flickity from "flickity";
     };
 
     Particle.prototype.updatePosition = function() {
-        this.particle.position.lerp(this.particle.targetPosition, 0.13);
+        this.particle.position.lerp(this.particle.targetPosition, 0.24);
     };
 
     function updateParticles() {
@@ -185,30 +164,39 @@ import * as Flickity from "flickity";
     }
 
     const getGraphicPos = (pixel) => {
-        const posX = (pixel.x - graphicOffsetX - Math.random() * 4 - 2) * 3;
-        const posY = (pixel.y - graphicOffsetY - Math.random() * 4 - 2) * 3;
-        const posZ = -20 * Math.random() + 40;
+        try {
+            const posX = (pixel.x - graphicOffsetX - Math.random() * 4 - 2) * 3;
+            const posY = (pixel.y - graphicOffsetY - Math.random() * 4 - 2) * 3;
+            const posZ = -20 * Math.random() + 40;
 
-        return { x: posX, y: posY, z: posZ };
+            return { x: posX, y: posY, z: posZ };
+        } catch (error) {
+            throw new Error(error);
+        }
+
     };
 
     const setParticles = () => {
-        for (let i = 0; i < graphicPixels.length; i++) {
-            if (particles[i]) {
-                const pos = getGraphicPos(graphicPixels[i]);
-                particles[i].particle.targetPosition.x = pos.x;
-                particles[i].particle.targetPosition.y = pos.y;
-                particles[i].particle.targetPosition.z = pos.z;
-            } else {
-                const p = new Particle();
-                p.init(i);
-                scene.add(p.particle);
-                particles[i] = p;
+        try {
+            for (let i = 0; i < graphicPixels.length; i++) {
+                if (particles[i]) {
+                    const pos = getGraphicPos(graphicPixels[i]);
+                    particles[i].particle.targetPosition.x = pos.x;
+                    particles[i].particle.targetPosition.y = pos.y;
+                    particles[i].particle.targetPosition.z = pos.z;
+                } else {
+                    const p = new Particle();
+                    p.init(i);
+                    scene.add(p.particle);
+                    particles[i] = p;
+                }
             }
-        }
 
-        for (let i = graphicPixels.length; i < particles.length; i++) {
-            randomPos(particles[i].particle.targetPosition, true);
+            for (let i = graphicPixels.length; i < particles.length; i++) {
+                randomPos(particles[i].particle.targetPosition, true);
+            }
+        } catch (err) {
+            throw new Error(err);
         }
     };
 
@@ -262,7 +250,7 @@ import * as Flickity from "flickity";
 
         setTimeout(() => {
             setParticles();
-        }, 500);
+        }, 700);
     };
 
     // -----------------------
@@ -313,7 +301,6 @@ import * as Flickity from "flickity";
         flkty.on("select", listener);
     };
 
-    // setInterval(function() { document.querySelector(".next").click() }, 2000);
 
     const onMouseMove = (event) => {
         mouseX = event.clientX - windowHalfWidth;
@@ -337,6 +324,30 @@ import * as Flickity from "flickity";
         windowHalfWidth = windowWidth / 2;
         windowHalfHeight = windowHeight / 2;
     };
+
+    const resize = () => {
+        if (windowWidth <= 900) {
+            const fieldOfView = 75;
+            const aspectRatio = windowWidth / windowHeight;
+            const nearPlane = 1;
+            const farPlane = 3000;
+            camera = new THREE.PerspectiveCamera(
+                fieldOfView,
+                aspectRatio,
+                nearPlane,
+                farPlane);
+            camera.position.z = 800;
+            camera.aspect = windowWidth / windowHeight;
+        }
+
+        if (windowWidth >= 900 && windowWidth <= 1599) {
+            initCamera(windowWidth / -1, windowWidth / 1.7, 944 / 2.4, 944 / -1.6, 0.01, 5000);
+        }
+
+        if (windowWidth >= 1600) {
+            initCamera(windowWidth * -.4762, 2048, 944 / 2.4, 944 / -1.6, 0.01, 5000);
+        }
+    }
 
     const animate = () => {
         requestAnimationFrame(animate);
