@@ -336,15 +336,23 @@ main {
     }
     canvas {
         height: 100vh !important;
-        transform: translateY(460px);
+        transform: translateY(540px);
     }
     .gradient {
-        transform: translateY(460px);
-        z-index: 4;
+        transform: translateY(540px);
+        z-index: 2;
     }
     .img-grid {
-        transform: translateY(627px);
+        transform: translateY(627px) translateX(-14px);
         z-index: 5;
+        text-align: center;
+    }
+    .img-grid p {
+        margin-left: 0 !important;
+    }
+    .grid {
+        margin-left: 0 !important;
+        justify-content: center;
     }
     .next-section {
         display: none;

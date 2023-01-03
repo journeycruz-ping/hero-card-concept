@@ -340,8 +340,7 @@ import Flickity from "flickity";
                 aspectRatio,
                 nearPlane,
                 farPlane);
-            camera.position.z = 800;
-            camera.aspect = windowWidth / windowHeight;
+            camera.position.z += 800;
         }
         if (windowWidth >= 1026 && windowWidth <= 1269) {
             initCamera(windowWidth / -0.6, windowWidth / 2.2, 944 / 1.5, 944 / -1, 0.01, 5000);
