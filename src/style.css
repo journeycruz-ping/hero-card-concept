@@ -21,6 +21,22 @@
     font-display: swap;
 }
 
+@font-face {
+    font-family: "Gotham";
+    src: url('/static/fonts/Gotham-Medium_Web.woff2') format('woff2');
+    font-weight: 500;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "Gotham";
+    src: url('/static/fonts/Gotham-Bold_Web.woff2') format('woff2');
+    font-weight: 700;
+    font-style: normal;
+    font-display: swap;
+}
+
 @keyframes slide-color-in {
     from {
         width: 0;
@@ -82,7 +98,7 @@
     color: rgb(5, 23, 39);
     display: inline-block;
     font-size: 20px;
-    font-weight: 400;
+    font-weight: 500;
     line-height: 28px;
     margin-bottom: 0;
 }
@@ -182,7 +198,7 @@ li svg {
 
 .img-grid p {
     font-family: "Gotham", Helvetica, sans-serif;
-    font-weight: 400;
+    font-weight: 700;
     line-height: 24px;
     color: rgb(5, 23, 39);
     display: inline-block;
