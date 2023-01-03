@@ -89,17 +89,16 @@
 
 html {
     box-sizing: border-box;
-    font-size: 14px;
+    /* font-size: 14px;
     line-height: 1.2;
     -ms-text-size-adjust: 100%;
-    -webkit-text-size-adjust: 100%;
+    -webkit-text-size-adjust: 100%; */
 }
 
 html,
 body {
     margin: 0;
     padding: 0;
-    -webkit-font-smoothing: antialiased;
 }
 
  :after,
@@ -163,13 +162,14 @@ main {
     display: flex;
     flex-wrap: wrap;
     justify-content: flex-start;
-    line-height: 24px;
+    line-height: 16px;
     max-width: 575px;
     row-gap: 12px;
     tab-size: 4;
-    column-gap: 2.5rem;
+    column-gap: 1.6rem;
     padding: 0;
     margin-top: 24px;
+    margin-left: 32px;
 }
 
 .grid li {
@@ -177,7 +177,7 @@ main {
 }
 
 li svg {
-    height: 75px;
+    height: 55px;
 }
 
 .img-grid p {
@@ -188,6 +188,7 @@ li svg {
     display: inline-block;
     font-size: 16px;
     margin-bottom: 0;
+    margin-left: 32px;
 }
 
 .intro-carousel {
@@ -212,11 +213,17 @@ img {
     text-align: center;
 }
 
+.card-1 {
+    background: rgba( 247, 248, 248, 80%);
+    width: max-content;
+    padding: 32px;
+}
+
 .intro-text {
     position: relative;
     transform: translateY(100px);
     z-index: 2;
-    margin-left: 65px;
+    margin-left: 33px;
 }
 
 h1 {
@@ -279,15 +286,55 @@ main {
     height: 500px;
 }
 
-
-/* @media screen and (min-width: 600px) {
+@media (min-width: 0px) and (max-width: 539px) {
+    .header-1 {
+        height: 60px;
+        background: white;
+    }
+    .header-2 {
+        background: #B3282D;
+    }
+    .card-1 {
+        background: none;
+        width: auto;
+        padding-left: 0;
+    }
+    .intro-text {
+        transform: none;
+    }
     canvas {
-        max-height: 89.3vh;
+        height: 100vh !important;
+        transform: translateY(460px);
+    }
+    .gradient {
+        transform: translateY(460px);
+        z-index: 4;
+    }
+    .img-grid {
+        transform: translateY(627px);
+        z-index: 5;
+    }
+    .next-section {
+        display: none;
     }
 }
 
-@media screen and (min-width: 900px) {
-    canvas {
-        transform: translateX(-200px);
+@media (min-width:540px) and (max-width: 1025px) {
+    .header-1 {
+        height: 60px;
+        background: white;
     }
-} */
+    .header-2 {
+        background: #B3282D;
+    }
+    .card-1 {
+        background: none;
+        width: auto;
+    }
+    .intro-text {
+        transform: none;
+    }
+    canvas {
+        height: 100vh !important;
+    }
+}

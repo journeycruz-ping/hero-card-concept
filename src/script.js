@@ -34,8 +34,8 @@ import Flickity from "flickity";
         currentGraphic = 0,
         graphicCanvas,
         gctx,
-        canvasWidth = 270,
-        canvasHeight = 270,
+        canvasWidth = 230,
+        canvasHeight = 230,
         graphicPixels,
         particles = [],
         graphicOffsetX = canvasWidth / 2,
@@ -388,7 +388,7 @@ import Flickity from "flickity";
         renderer.render(scene, camera);
     };
 
-    setInterval(function() { document.querySelector(".next").click(); }, 4000);
+    setInterval(function() { document.querySelector(".next").click(); }, 6000);
 
     try {
         document.addEventListener("DOMContentLoaded", function() {
